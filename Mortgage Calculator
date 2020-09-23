@@ -1,0 +1,404 @@
+VERSION 5.00
+Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
+Begin VB.Form frmMain 
+   BackColor       =   &H00C0C0C0&
+   Caption         =   "New Mortgage Calculator"
+   ClientHeight    =   4005
+   ClientLeft      =   60
+   ClientTop       =   630
+   ClientWidth     =   8835
+   ForeColor       =   &H00C0C0C0&
+   Icon            =   "Mortgage Calculator.frx":0000
+   LinkTopic       =   "Form1"
+   MaxButton       =   0   'False
+   Picture         =   "Mortgage Calculator.frx":0442
+   ScaleHeight     =   4005
+   ScaleWidth      =   8835
+   StartUpPosition =   1  'CenterOwner
+   Begin VB.PictureBox picHome 
+      Appearance      =   0  'Flat
+      BackColor       =   &H80000005&
+      BeginProperty Font 
+         Name            =   "Comic Sans MS"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000008&
+      Height          =   2835
+      Left            =   0
+      Picture         =   "Mortgage Calculator.frx":4B588
+      ScaleHeight     =   2805
+      ScaleWidth      =   3750
+      TabIndex        =   8
+      TabStop         =   0   'False
+      Top             =   0
+      Width           =   3780
+   End
+   Begin VB.CommandButton cmdAmortization 
+      Caption         =   "Amor&tization"
+      BeginProperty Font 
+         Name            =   "Arial Narrow"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   495
+      Left            =   6600
+      TabIndex        =   7
+      ToolTipText     =   "To see a Amortization table."
+      Top             =   3240
+      Width           =   1215
+   End
+   Begin MSMask.MaskEdBox mskRate 
+      BeginProperty DataFormat 
+         Type            =   1
+         Format          =   "0.00%"
+         HaveTrueFalseNull=   0
+         FirstDayOfWeek  =   0
+         FirstWeekOfYear =   0
+         LCID            =   1033
+         SubFormatType   =   5
+      EndProperty
+      Height          =   495
+      Left            =   6600
+      TabIndex        =   3
+      ToolTipText     =   "Enter interest rate like this: for 5.25% enter 5.25"
+      Top             =   840
+      Width           =   1215
+      _ExtentX        =   2143
+      _ExtentY        =   873
+      _Version        =   393216
+      AutoTab         =   -1  'True
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Format          =   "#0.0##%"
+      PromptChar      =   "_"
+   End
+   Begin MSMask.MaskEdBox mskLoanAmount 
+      CausesValidation=   0   'False
+      BeginProperty DataFormat 
+         Type            =   1
+         Format          =   """$""#,##0.00"
+         HaveTrueFalseNull=   0
+         FirstDayOfWeek  =   0
+         FirstWeekOfYear =   0
+         LCID            =   1033
+         SubFormatType   =   2
+      EndProperty
+      Height          =   495
+      Left            =   6600
+      TabIndex        =   1
+      ToolTipText     =   "Enter amount to borrow"
+      Top             =   240
+      Width           =   1815
+      _ExtentX        =   3201
+      _ExtentY        =   873
+      _Version        =   393216
+      AutoTab         =   -1  'True
+      MaxLength       =   12
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Format          =   "$#,##0.00;($#,##0.00)"
+      Mask            =   "#,###,###.##"
+      PromptChar      =   "_"
+   End
+   Begin VB.TextBox txtPayment 
+      Appearance      =   0  'Flat
+      BeginProperty Font 
+         Name            =   "Verdana"
+         Size            =   14.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   495
+      Left            =   6600
+      TabIndex        =   10
+      TabStop         =   0   'False
+      Top             =   2040
+      Width           =   2055
+   End
+   Begin VB.TextBox txtTerm 
+      Alignment       =   2  'Center
+      BeginProperty Font 
+         Name            =   "Tahoma"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   495
+      Left            =   6600
+      TabIndex        =   5
+      ToolTipText     =   "Length of Loan in Years"
+      Top             =   1440
+      Width           =   855
+   End
+   Begin VB.CommandButton cmdCalculate 
+      Caption         =   "&Calculate"
+      Default         =   -1  'True
+      BeginProperty Font 
+         Name            =   "Arial Narrow"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   495
+      Left            =   6600
+      TabIndex        =   6
+      ToolTipText     =   "Calculate Payment Amount"
+      Top             =   2640
+      Width           =   1215
+   End
+   Begin VB.Label Label4 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "Monthly Payment:"
+      BeginProperty Font 
+         Name            =   "Arial Black"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   345
+      Left            =   4080
+      TabIndex        =   9
+      Top             =   2115
+      Width           =   2370
+   End
+   Begin VB.Label Label3 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "&Term:"
+      BeginProperty Font 
+         Name            =   "Arial Black"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   345
+      Left            =   5685
+      TabIndex        =   4
+      Top             =   1515
+      Width           =   765
+   End
+   Begin VB.Label Label2 
+      AutoSize        =   -1  'True
+      BackStyle       =   0  'Transparent
+      Caption         =   "&Interest rate:"
+      BeginProperty Font 
+         Name            =   "Arial Black"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   345
+      Left            =   4710
+      TabIndex        =   2
+      Top             =   915
+      Width           =   1740
+   End
+   Begin VB.Label Label1 
+      AutoSize        =   -1  'True
+      BackColor       =   &H00C0C0C0&
+      BackStyle       =   0  'Transparent
+      Caption         =   "&Amount:"
+      BeginProperty Font 
+         Name            =   "Arial Black"
+         Size            =   12
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   345
+      Left            =   5355
+      TabIndex        =   0
+      Top             =   315
+      Width           =   1095
+   End
+   Begin VB.Menu mnuFile 
+      Caption         =   "&File"
+      Begin VB.Menu mnuFileExit 
+         Caption         =   "E&xit"
+      End
+   End
+   Begin VB.Menu mnuHelp 
+      Caption         =   "&Help"
+      Begin VB.Menu mnuHelpAbout 
+         Caption         =   "&About"
+      End
+   End
+End
+Attribute VB_Name = "frmMain"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+ Option Explicit
+
+Private Sub cmdAmortization_Click()
+'Open the Amortization Form
+Amortization.Show
+End Sub
+
+Private Sub cmdAmortization_LostFocus()
+'Clear data out for new entry
+mskRate.Text = ""
+txtTerm.Text = ""
+txtPayment.Text = ""
+
+End Sub
+
+Private Sub cmdCalculate_Click()
+
+Dim LoanAmount As Currency  'Amount to borrow
+Dim Rate As Double          'Interest Rate of Loan
+Dim Nper As Integer         'Total payment periods
+Dim Payment As Currency     'Monthly Payment
+
+'Test for data present in all text boxes
+On Error GoTo ErrHandler
+
+If mskLoanAmount.Text <= 0 Or _
+    mskLoanAmount.Text = "_,___,___.__" Or _
+    mskRate.Text <= 0 Or txtTerm.Text <= 0 _
+    Then GoTo ErrHandler
+
+LoanAmount = mskLoanAmount.Text
+mskRate.Text = mskRate.Text * 100
+Rate = mskRate.Text / 1200
+Nper = txtTerm.Text * 12
+
+Payment = Pmt(Rate, Nper, -LoanAmount)
+txtPayment.Text = Format(Payment, "Currency", 2)
+
+mskRate.Text = mskRate.Text / 100   'This is to keep the
+                                    'value from displaying
+                                    'differently
+Rate = mskRate.Text / 1200          'Same as above
+
+Exit Sub
+
+ErrHandler:
+MsgBox "Please enter valid data into fields.", vbExclamation
+    If mskRate.Text = "" Then
+        mskRate.SetFocus
+    Else
+        If txtTerm.Text = "" Then
+            txtTerm.SetFocus
+        End If
+    End If
+End Sub
+
+Private Sub Form_Load()
+'Place some starting values into each textbox so that when
+'user clicks the About menu item without first entering data
+'a error will not be generated.
+mskLoanAmount.Text = "0,001,000.00"
+End Sub
+
+Private Sub mnuFileExit_Click()
+  Unload Me
+
+End Sub
+
+Private Sub mnuHelpAbout_Click()
+    frmAbout.Show
+End Sub
+
+' Select all the text in this TextBox.
+Private Sub SelectField(ByVal text_box As TextBox)
+    text_box.SelStart = 0
+    text_box.SelLength = Len(text_box.Text)
+End Sub
+
+' Select all the text in this TextBox.
+Private Sub SelectmField(ByVal text_box As MaskEdBox)
+    text_box.SelStart = 0
+    text_box.SelLength = Len(text_box.Text)
+End Sub
+
+Private Sub mskLoanAmount_Change()
+
+'Clear all text box values when this data changes
+mskRate.Text = ""
+txtTerm.Text = ""
+txtPayment.Text = ""
+
+End Sub
+
+Private Sub mskLoanAmount_GotFocus()
+    SelectmField mskLoanAmount
+    
+End Sub
+
+Private Sub mskRate_LostFocus()
+'Format the Rate to be as a percentage but allow user to input
+'a whole number; for example: 7.5% entered as 7.5 and not as
+'0.075.
+
+On Error GoTo ErrHandler
+
+If mskRate.Text <= 0 Then GoTo ErrHandler
+
+mskRate.Text = mskRate.Text / 100
+Exit Sub
+
+ErrHandler:
+
+End Sub
+
+Private Sub txtPayment_Change()
+txtPayment.Text = Format(txtPayment.Text, "Currency", 2)
+
+End Sub
+
+Private Sub mskRate_GotFocus()
+    SelectmField mskRate
+
+End Sub
+
+Private Sub txtTerm_GotFocus()
+    SelectField txtTerm
+
+End Sub
+
